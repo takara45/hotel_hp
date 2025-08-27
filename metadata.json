@@ -1,0 +1,5 @@
+{
+  "name": "Last Minute Call - Hotel Booking",
+  "description": "A web application for finding last-minute hotel and private rental deals for tomorrow and the day after. Users can search for properties and get contact information to book directly via phone.",
+  "requestFramePermissions": []
+}

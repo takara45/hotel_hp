@@ -1,0 +1,12 @@
+{
+  "name": "last-minute-call-server",
+  "version": "1.0.0",
+  "description": "Simple web server for the Last Minute Call application.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

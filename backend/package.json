@@ -1,0 +1,12 @@
+{
+  "name": "last-minute-call-backend",
+  "version": "1.0.0",
+  "description": "API for the Last Minute Call application.",
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/firestore": "^7.8.0",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {}
+}
