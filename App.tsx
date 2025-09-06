@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Property, SearchCriteria, Review, Announcement, PropertyTag } from './types.ts';
 import Header from './components/Header.tsx';
@@ -123,6 +119,75 @@ const App: React.FC = () => {
     };
     loadInitialData();
   }, []);
+
+  // SEO: Dynamically update meta tags and structured data
+  useEffect(() => {
+      const defaultTitle = 'ラストミニッツ・コール | 直前の宿探し';
+      const defaultDescription = '明日・明後日の宿泊に特化した直前予約サイト。ホテルや民泊のお得なプランを見つけて、電話一本ですぐに予約！';
+
+      const updateMetaTag = (selector: string, content: string) => {
+          const element = document.querySelector(selector);
+          if (element) {
+              element.setAttribute('content', content);
+          }
+      };
+      
+      const updateJsonLd = (property: Property | null) => {
+          const existingScript = document.getElementById('json-ld-script');
+          if (existingScript) {
+              existingScript.remove();
+          }
+          if (!property) return;
+
+          const jsonLd = {
+              '@context': 'https://schema.org',
+              '@type': property.type === 'ホテル' ? 'Hotel' : 'LodgingBusiness',
+              name: property.name,
+              description: property.description.substring(0, 5000), // Max length for description
+              telephone: property.phoneNumber,
+              address: {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'JP',
+                  streetAddress: property.address,
+              },
+              geo: {
+                  '@type': 'GeoCoordinates',
+                  latitude: property.latitude,
+                  longitude: property.longitude,
+              },
+              image: property.photos[0],
+              aggregateRating: property.reviews.length > 0 ? {
+                  '@type': 'AggregateRating',
+                  ratingValue: property.rating.toFixed(1),
+                  reviewCount: property.reviews.length,
+              } : undefined,
+          };
+
+          const script = document.createElement('script');
+          script.id = 'json-ld-script';
+          script.type = 'application/ld+json';
+          script.innerHTML = JSON.stringify(jsonLd);
+          document.head.appendChild(script);
+      };
+
+      if (selectedProperty) {
+          const title = `【${selectedProperty.name}】の予約・口コミ | ラストミニッツ・コール`;
+          const description = selectedProperty.description.substring(0, 120) + '...';
+          document.title = title;
+          updateMetaTag('meta[name="description"]', description);
+          updateMetaTag('meta[property="og:title"]', title);
+          updateMetaTag('meta[property="og:description"]', description);
+          updateMetaTag('meta[property="og:image"]', selectedProperty.photos[0] || '');
+          updateJsonLd(selectedProperty);
+      } else {
+          document.title = defaultTitle;
+          updateMetaTag('meta[name="description"]', defaultDescription);
+          updateMetaTag('meta[property="og:title"]', defaultTitle);
+          updateMetaTag('meta[property="og:description"]', defaultDescription);
+          updateMetaTag('meta[property="og:image"]', 'https://picsum.photos/seed/og-image/1200/630');
+          updateJsonLd(null);
+      }
+  }, [selectedProperty]);
 
   const handleSearch = useCallback((criteria: SearchCriteria) => {
     setSearchCriteria(criteria);

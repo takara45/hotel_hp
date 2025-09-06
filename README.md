@@ -1,51 +1,20 @@
-## ローカル環境での実行方法 (Local Development)
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-お使いのPC上でアプリケーションを起動し、テストするための手順です。
+# Run and deploy your AI Studio app
 
-### 1. 前提条件 (Prerequisites)
+This contains everything you need to run your app locally.
 
-- [Node.js](https://nodejs.org/) (バージョン18以降を推奨) と npm がインストールされていること。
+View your app in AI Studio: https://ai.studio/apps/drive/1f2xwL4TcZg_VnUjL6yAy0WS6HgDW4_9E
 
-### 2. セットアップ手順 (Steps)
+## Run Locally
 
-1.  **リポジトリをクローン**
-    ```bash
-    git clone https://github.com/[あなたのユーザー名]/[リポジトリ名].git
-    cd [リポジトリ名]
-    ```
+**Prerequisites:**  Node.js
 
-2.  **依存関係をインストール**
-    プロジェクトに必要なパッケージをインストールします。
-    ```bash
-    npm install
-    ```
 
-3.  **APIキーを設定**
-    このアプリケーションは、Gemini APIキーを環境変数 `API_KEY` から読み込みます。サーバーを起動する前に、ターミナルで以下のコマンドを実行してください。
-
-    **macOS / Linux の場合:**
-    ```bash
-    export API_KEY="ここにあなたのAPIキーを貼り付け"
-    ```
-
-    **Windows (コマンドプロンプト) の場合:**
-    ```bash
-    set API_KEY="ここにあなたのAPIキーを貼り付け"
-    ```
-
-    **Windows (PowerShell) の場合:**
-    ```bash
-    $env:API_KEY="ここにあなたのAPIキーを貼り付け"
-    ```
-
-4.  **サーバーを起動**
-    以下のコマンドでローカルWebサーバーを起動します。
-    ```bash
-    npm start
-    ```
-    ターミナルに `Server listening on port 8080` と表示されれば成功です。
-
-5.  **ブラウザで確認**
-    ウェブブラウザを開き、アドレスバーに以下のURLを入力してください。
-    [http://localhost:8080](http://localhost:8080)
-
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
